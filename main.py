@@ -44,7 +44,13 @@ def task2():
     
 
 def task3():
-    ...
+    print("Task 3 - String")
+    str = input("Enter a string: ")
+    print(f"Length of the string: {len(str)}")
+    print(f"Number of words in the string: {len(str.split())}")
+    print(f"Number of vowels in the string: {sum(1 for char in str.lower() if char in 'aeiou')}")
+    print(f"The longest word in the string: {max(str.split(), key=len)}")
+    print(f"Reversed string: {str[::-1]}")
 def task4():
     ...
 
@@ -93,20 +99,20 @@ def main():
         print("\n===== PYTHON TASKS =====")
 
         for number in tasks:
-            print(f"{number}. Задача {number}")
+            print(f"{number}. Tasks {number}")
 
-        print("0. Выход")
+        print("0. Exit")
 
-        choice = input("\nВыберите задачу: ")
+        choice = input("\nEnter your choice: ")
 
         if choice == "0":
-            print("Выход...")
+            print("Exiting...")
             break
 
         if choice in tasks:
             tasks[choice]()
         else:
-            print("Такой задачи нет.")
+            print("Invalid choice.")
 
 
 main()

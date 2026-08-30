@@ -52,8 +52,50 @@ def task3():
     print(f"The longest word in the string: {max(str.split(), key=len)}")
     print(f"Reversed string: {str[::-1]}")
 def task4():
-    ...
+    shopping_list = []
+    print("Task 4 - Shopping List")
+    t_list = {
+        "1": "Show list",
+        "2": "Add item",
+        "3": "Remove item",
+        "4": "Clear list",
+        "0": "Exit"
+    }
+    while True:
+        print("\n===== SHOPPING LIST =====")
+        for number, action in t_list.items():
+            print(f"{number}. {action}")
 
+        choice = input("\nEnter your choice: ")
+
+        if choice == "0":
+            print("Exiting...")
+            break
+
+        if choice == "1":
+            print("Shopping List:")
+            if len(shopping_list) == 0:
+                print("The list is empty.")
+            else:
+                for item in shopping_list:
+                    print(f"- {item}")
+            
+        elif choice == "2":
+            item = input("Enter the item to add: ")
+            shopping_list.append(item)
+            print(f"{item} added to the list.")
+        elif choice == "3":
+            item = input("Enter the item to remove: ")
+            if item in shopping_list:
+                shopping_list.remove(item)
+                print(f"{item} removed from the list.")
+            else:
+                print(f"{item} not found in the list.")
+        elif choice == "4":
+            shopping_list.clear()
+            print("Shopping list cleared.")
+        else:
+            print("Invalid choice.")
 def task5():
     ...
     

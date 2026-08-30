@@ -97,7 +97,53 @@ def task4():
         else:
             print("Invalid choice.")
 def task5():
-    ...
+    print("Task 5 - Telephone Book")
+    telephone_book = {}
+    t_choise = {
+        "1": "Add contact",
+        "2": "Search contact",
+        "3": "Remove contact",
+        "4": "Show all contacts",
+        "0": "Exit"
+    }
+    while True:
+        print("\n===== TELEPHONE BOOK =====")
+        for number, action in t_choise.items():
+            print(f"{number}. {action}")
+
+        choice = input("\nEnter your choice: ")
+
+        if choice == "0":
+            print("Exiting...")
+            break
+
+        if choice == "1":
+            name = input("Enter contact name: ")
+            phone_number = input("Enter phone number: ")
+            telephone_book[name] = phone_number
+            print(f"Contact {name} added.")
+        elif choice == "2":
+            name = input("Enter contact name to search: ")
+            if name in telephone_book:
+                print(f"{name}: {telephone_book[name]}")
+            else:
+                print(f"Contact {name} not found.")
+        elif choice == "3":
+            name = input("Enter contact name to remove: ")
+            if name in telephone_book:
+                del telephone_book[name]
+                print(f"Contact {name} removed.")
+            else:
+                print(f"Contact {name} not found.")
+        elif choice == "4":
+            if len(telephone_book) == 0:
+                print("No contacts found.")
+            else:
+                print("Contacts:")
+                for name, phone_number in telephone_book.items():
+                    print(f"{name}: {phone_number}")
+        else:
+            print("Invalid choice.")
     
 
 def task6():

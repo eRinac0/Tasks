@@ -1,6 +1,31 @@
 import random
 
 
+def get_average(ratings):
+    if len(ratings) == 0:
+        return 0
+    return sum(ratings) / len(ratings)
+
+def get_max(ratings):
+    if len(ratings) == 0:
+        return None
+    return max(ratings)
+
+def get_min(ratings):
+    if len(ratings) == 0:
+        return None
+    return min(ratings)
+
+def count_ratings(ratings, rating):
+    count = 0
+    for r in ratings:
+        if r == rating:
+            count += 1
+    return count
+
+def sort_ratings(ratings):
+    return sorted(ratings)
+
 def task1():
     print("Task 1 - Calculator")
     print("Enter two numbers and an operation (+, -, *, /):")
@@ -147,7 +172,27 @@ def task5():
     
 
 def task6():
-    ...
+    print("Task 6 - Statistics ratings")
+    ratings = []
+
+    while True:
+        try:
+            rating = float(input("Enter a rating (0-10), or -1 to finish: "))
+            if rating == -1:
+                break
+            elif 0 <= rating <= 10:
+                ratings.append(rating)
+            else:
+                print("Invalid rating. Please enter a value between 0 and 10.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+    print(f"Average rating: {get_average(ratings)}")
+    print(f"Highest rating: {get_max(ratings)}")
+    print(f"Lowest rating: {get_min(ratings)}")
+    print(f"Number of 5-star ratings: {count_ratings(ratings, 5)}")
+    print(f"Number of 2-star ratings: {count_ratings(ratings, 2)}")
+    print(f"Sorted ratings: {sort_ratings(ratings)}")
 
 def task7():
     ...

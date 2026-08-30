@@ -2,11 +2,11 @@ import random
 
 
 def task1():
-    print("Задача 1 - Калькулятор")
-    print("Введите два числа и операцию (+, -, *, /):")
-    num1 = float(input("Первое число: "))
-    num2 = float(input("Второе число: "))
-    operation = input("Операция: ")
+    print("Task 1 - Calculator")
+    print("Enter two numbers and an operation (+, -, *, /):")
+    num1 = float(input("First number: "))
+    num2 = float(input("Second number: "))
+    operation = input("Operation: ")
 
     if operation == "+":
         result = num1 + num2
@@ -16,30 +16,30 @@ def task1():
         result = num1 * num2
     elif operation == "/":
         if num2 == 0:
-            print("Ошибка: Деление на ноль!")
+            print("Error: Division by zero!")
             return
         result = num1 / num2
     else:
-        print("Неверная операция!")
+        print("Invalid operation!")
         return
 
-    print(f"Результат: {result}")
+    print(f"Result: {result}")
 
 def task2():
-    print("Задача 2 - Генератор случайных чисел")
-    lower = int(input("Введите нижнюю границу: "))
-    upper = int(input("Введите верхнюю границу: "))
+    print("Task 2 - Random Number Generator")
+    lower = int(input("Enter the lower bound: "))
+    upper = int(input("Enter the upper bound: "))
     random_number = random.randint(lower, upper)
-    print(f"Случайное число между {lower} и {upper}:")
+    print(f"Random number between {lower} and {upper}:")
 
     while True:
-        source = float(input("Введите число для проверки: "))
+        source = float(input("Enter a number to check: "))
         if source > random_number:
-            print("Меньше")
+            print("Less")
         elif source < random_number:
-            print("Больше")
+            print("Greater")
         else:
-            print("Поздравляем! Вы угадали число.")
+            print("Congratulations! You guessed the number.")
             break
     
 

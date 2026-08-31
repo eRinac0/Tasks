@@ -257,10 +257,48 @@ def task7():
             print("Invalid choice.")
 
 def task8():
-    ...
+    print("Task 8 - Work with files")
+    f_choice = {
+        "1": "Add notes to file",
+        "2": "Show notes from file",
+        "3": "Clear notes from file",
+        "0": "Exit"
+    }
+    while True:
+        print("\n===== FILE OPERATIONS =====")
+        for number, action in f_choice.items():
+            print(f"{number}. {action}")
 
-def task8():
-    ...
+        choice = input("\nEnter your choice: ")
+
+        if choice == "0":
+            print("Exiting...")
+            break
+
+        if choice == "1":
+            note = input("Enter a note to add: ")
+            with open("notes.txt", "a") as file:
+                file.write(note + "\n")
+            print("Note added.")
+        elif choice == "2":
+            try:
+                with open("notes.txt", "r") as file:
+                    notes = file.readlines()
+                    if notes:
+                        print("Notes:")
+                        for note in notes:
+                            print(note.strip())
+                    else:
+                        print("No notes found.")
+            except FileNotFoundError:
+                print("No notes found.")
+        elif choice == "3":
+            with open("notes.txt", "w") as file:
+                pass
+            print("Notes cleared.")
+        else:
+            print("Invalid choice.")
+
 
 def task9():
     ...

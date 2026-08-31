@@ -73,7 +73,7 @@ def task3():
     str = input("Enter a string: ")
     print(f"Length of the string: {len(str)}")
     print(f"Number of words in the string: {len(str.split())}")
-    print(f"Number of vowels in the string: {sum(1 for char in str.lower() if char in 'aeiou')}")
+    print(f"Number of vowels in the string: {sum(1 for char in str.lower() if char in 'aeiouy')}")
     print(f"The longest word in the string: {max(str.split(), key=len)}")
     print(f"Reversed string: {str[::-1]}")
 def task4():
@@ -124,7 +124,7 @@ def task4():
 def task5():
     print("Task 5 - Telephone Book")
     telephone_book = {}
-    t_choise = {
+    t_choice = {
         "1": "Add contact",
         "2": "Search contact",
         "3": "Remove contact",
@@ -133,7 +133,7 @@ def task5():
     }
     while True:
         print("\n===== TELEPHONE BOOK =====")
-        for number, action in t_choise.items():
+        for number, action in t_choice.items():
             print(f"{number}. {action}")
 
         choice = input("\nEnter your choice: ")
@@ -194,8 +194,67 @@ def task6():
     print(f"Number of 2-star ratings: {count_ratings(ratings, 2)}")
     print(f"Sorted ratings: {sort_ratings(ratings)}")
 
+class BankAccount:
+    def __init__(self, balance, owner):
+        self.balance = balance
+        self.owner = owner
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.balance += amount
+            print(f"Deposited {amount}. New balance: {self.balance}")
+        else:
+            print("Deposit amount must be positive.")
+
+    def withdraw(self, amount):
+        if amount > 0:
+            if amount <= self.balance:
+                self.balance -= amount
+                print(f"Withdrew {amount}. New balance: {self.balance}")
+            else:
+                print("Insufficient funds.")
+        else:
+            print("Withdrawal amount must be positive.")
+
+    def show_balance(self):
+        print(f"Account owner: {self.owner}, Balance: {self.balance}")
+
+
 def task7():
-    ...
+    print("Task 7 - Bank Account")
+    owner = input("Enter account owner name: ")
+    balance = float(input("Enter initial balance: "))
+
+    account = BankAccount(balance, owner)
+
+    b_choice = {
+        "1": "Deposit",
+        "2": "Withdraw",
+        "3": "Show balance",
+        "0": "Exit"
+    }
+
+    while True:
+        print("\n===== BANK ACCOUNT =====")
+        for number, action in b_choice.items():
+            print(f"{number}. {action}")
+
+        choice = input("\nEnter your choice: ")
+
+        if choice == "0":
+            print("Exiting...")
+            break
+
+        if choice == "1":
+            amount = float(input("Enter amount to deposit: "))
+            account.deposit(amount)
+        elif choice == "2":
+            amount = float(input("Enter amount to withdraw: "))
+            account.withdraw(amount)
+        elif choice == "3":
+            account.show_balance()
+        else:
+            print("Invalid choice.")
 
 def task8():
     ...

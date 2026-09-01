@@ -1,5 +1,5 @@
 import random
-
+import string
 
 def get_average(ratings):
     if len(ratings) == 0:
@@ -301,7 +301,85 @@ def task8():
 
 
 def task9():
-    ...
+    print("Task 9 - Password manager")
+    p_choice = {
+        "1": "Add account",
+        "2": "Find account",
+        "3": "Show all accounts",
+        "4": "Remove account",
+        "5": "Generate random password",
+        "0": "Exit"
+    }
+    while True:
+        print("\n===== PASSWORD MANAGER =====")
+        for number, action in p_choice.items():
+            print(f"{number}. {action}")
+
+        choice = input("\nEnter your choice: ")
+        if choice == "0":
+            print("Exiting...")
+            break
+        elif choice == "1":
+            account = input("Enter account name: ")
+            password = input("Enter password: ")
+            with open("passwords.txt", "a") as file:
+                file.write(f"{account}:{password}\n")
+            print("Account added.")
+        elif choice == "2":
+            account = input("Enter account name to find: ")
+            try:
+                with open("passwords.txt", "r") as file:
+                    for line in file:
+                        if line.startswith(account + ":"):
+                            print(f"Password for {account}: {line.split(':')[1].strip()}")
+                            break
+                    else:
+                        print("Account not found.")
+            except FileNotFoundError:
+                print("No accounts found.")
+        elif choice == "3":
+            try:
+                with open("passwords.txt", "r") as file:
+                    accounts = file.readlines()
+                    if accounts:
+                        print("All accounts:")
+                        for line in accounts:
+                            print(line.strip())
+                    else:
+                        print("No accounts found.")
+            except FileNotFoundError:
+                print("No accounts found.")
+        elif choice == "4":
+            account = input("Enter account name to remove: ")
+            found = False
+            try:
+                with open("passwords.txt", "r") as file:
+                    lines = file.readlines()
+                for line in lines:
+                    if line.startswith(account + ":"):
+                        found = True
+                        break
+                if found:
+                    with open("passwords.txt", "w") as file:
+                        for line in lines:
+                            if not line.startswith(account + ":"):
+                                file.write(line)
+                    print("Account removed.")
+                else:
+                    print("Account not found.")
+            except FileNotFoundError:
+                print("No accounts found.")
+        elif choice == "5":
+            length = int(input("Enter desired password length: "))
+            try:
+                if length <= 0:
+                    print("Password length must be positive.")
+                    continue
+                characters = string.ascii_letters + string.digits + string.punctuation
+                password = ''.join(random.choice(characters) for _ in range(length))
+                print(f"Generated password: {password}")
+            except ValueError:
+                print("Invalid input. Please enter a valid number.")
 
 def task10():
     ...

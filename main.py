@@ -381,12 +381,125 @@ def task9():
             except ValueError:
                 print("Invalid input. Please enter a valid number.")
 
+
+class Player:
+    def __init__(self, name):
+        self.name = name
+        self.health = 100
+        self.attack_power = 20
+        self.defense = 10
+        self.gold = 20
+
+    def attack(self):
+        return self.attack_power
+
+    def use_potion(self):
+        self.health = min(100, self.health + 40)
+
+    def show_stats(self):
+        print(f"Name: {self.name}")
+        print(f"Health: {self.health}")
+        print(f"Attack Power: {self.attack_power}")
+        print(f"Defense: {self.defense}")
+        print(f"Gold: {self.gold}")
+
+
+class Enemy:
+    def __init__(self, name, health, attack_power):
+        self.name = name
+        self.health = health
+        self.attack_power = attack_power
+
+    def attack(self):
+        return self.attack_power
+
+def shop(player):
+    print("Welcome to the shop!")
+    print("1. Buy potion (10 gold)")
+    print("2. Leave shop")
+    choice = input("Enter your choice: ")
+    if choice == "1":
+        if player.gold >= 10:
+            player.gold -= 10
+            player.use_potion()
+            print("You bought a potion and restored 40 health.")
+            print(f"Remaining gold: {player.gold}")
+            print(f"Current health: {player.health}")
+
+        else:
+            print("Not enough gold.")
+    elif choice == "2":
+        print("Leaving shop.")
+    else:
+        print("Invalid choice.")
+
+def battle(player, enemy):
+    print(f"A wild {enemy.name} appears!")
+    while enemy.health > 0 and player.health > 0:
+        action = input("Choose an action (attack - 1 /buy potion - 2): ")
+        if action == "1":
+            damage = player.attack()
+            enemy.health -= damage
+            print(f"You attacked the {enemy.name} for {damage} damage.")
+        elif action == "2":
+            shop(player)
+        else:
+            print("Invalid action.")
+
+        if enemy.health > 0:
+            damage = max(0, enemy.attack() - player.defense)
+            player.health -= damage
+            print(f"The {enemy.name} attacked you for {damage} damage.")
+
+        player.show_stats()
+        print(f"{enemy.name} Health: {enemy.health}")
+
+    if player.health <= 0:
+        print("You have been defeated!")
+    else:
+        print(f"You defeated the {enemy.name}!")
+        print(f"You earned 20 gold.")
+        player.gold += 20
+
 def task10():
-    ...
+    print("Task 10- Mini RPG Game")
+    player_name = input("Enter your character's name: ")
+    player = Player(player_name)
+    enemy1 = Enemy("Goblin", 50, 10)
+    enemy2 = Enemy("Orc", 100, 20)
+    enemy3 = Enemy("Dragon", 150, 30)
+    g_choice = {
+        "1": "Start game",
+        "2": "Show player stats",
+        "0": "Exit"
+    }
 
+    while True:
+        print("\n===== MINI RPG GAME =====")
+        for number, action in g_choice.items():
+            print(f"{number}. {action}")
 
+        choice = input("\nEnter your choice: ")
 
-
+        if choice == "0":
+            print("Exiting...")
+            break
+        elif choice == "1":
+            print(f"Starting game with {player.name}!")
+            battle(player, enemy1)
+            print("Next battle!")
+            battle(player, enemy2)
+            print("Final battle!")
+            battle(player, enemy3)
+            print("Game over!")
+            break
+        elif choice == "2":
+            player.show_stats()
+        else:
+            print("Invalid choice.")
+     
+        
+        
 
 
 def main():

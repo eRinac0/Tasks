@@ -1,5 +1,6 @@
 import random
 import string
+import json
 
 def get_average(ratings):
     if len(ratings) == 0:
@@ -402,7 +403,8 @@ class Player:
         print(f"Attack Power: {self.attack_power}")
         print(f"Defense: {self.defense}")
         print(f"Gold: {self.gold}")
-
+    def escape(self):
+        return random.randrange(1, 10)
 
 class Enemy:
     def __init__(self, name, health, attack_power):
@@ -412,6 +414,9 @@ class Enemy:
 
     def attack(self):
         return self.attack_power
+    
+    def escape(self):
+            return random.randrange(1, 10)
 
 def shop(player):
     print("Welcome to the shop!")
@@ -436,13 +441,21 @@ def shop(player):
 def battle(player, enemy):
     print(f"A wild {enemy.name} appears!")
     while enemy.health > 0 and player.health > 0:
-        action = input("Choose an action (attack - 1 /buy potion - 2): ")
+        action = input("Choose an action (attack - 1 /buy potion - 2/save game - 3/escape - 4): ")
         if action == "1":
             damage = player.attack()
             enemy.health -= damage
             print(f"You attacked the {enemy.name} for {damage} damage.")
         elif action == "2":
             shop(player)
+        elif action == "3":
+            save_game(player)
+        elif action == "4":
+            if player.escape() > enemy.escape():
+                print("You successfully escaped!")
+                return
+            else:
+                print("Escape failed! The battle continues.")
         else:
             print("Invalid action.")
 
@@ -461,21 +474,73 @@ def battle(player, enemy):
         print(f"You earned 20 gold.")
         player.gold += 20
 
-def task10():
-    print("Task 10- Mini RPG Game")
+def save_game(player):
+    game_data = {
+        "name": player.name,
+        "health": player.health,
+        "attack_power": player.attack_power,
+        "defense": player.defense,
+        "gold": player.gold
+    }
+    with open("save_game.json", "w") as file:
+        json.dump(game_data, file)
+    print("Game saved.")
+
+def load_game():
+    try:
+        with open("save_game.json", "r") as file:
+            game_data = json.load(file)
+            player = Player(game_data["name"])
+            player.health = game_data["health"]
+            player.attack_power = game_data["attack_power"]
+            player.defense = game_data["defense"]
+            player.gold = game_data["gold"]
+            print("Game loaded.")
+            return player
+    except FileNotFoundError:
+        print("No saved game found.")
+        return None
+
+def new_game():
     player_name = input("Enter your character's name: ")
     player = Player(player_name)
+    print(f"New game started with {player.name}.")
+    return player
+
+def adventure(player):
+    enemy1 = Enemy("Goblin", 50, 10)
+    enemy2 = Enemy("Orc", 100, 20)
+    enemy3 = Enemy("Dragon", 150, 30)
+
+    print(f"Welcome to the adventure, {player.name}!")
+    battle(player, enemy1)
+    if player.health > 0:
+        print("Next battle!")
+        battle(player, enemy2)
+    if player.health > 0:
+        print("Final battle!")
+        battle(player, enemy3)
+    if player.health > 0:
+        print("Congratulations! You completed the adventure.")
+    else:
+        print("Game over!")
+
+def task10():
+    print("Task 10- Mini RPG Game")
+
     enemy1 = Enemy("Goblin", 50, 10)
     enemy2 = Enemy("Orc", 100, 20)
     enemy3 = Enemy("Dragon", 150, 30)
     g_choice = {
         "1": "Start game",
         "2": "Show player stats",
+        "3": "Load game",
         "0": "Exit"
     }
 
     while True:
         print("\n===== MINI RPG GAME =====")
+    
         for number, action in g_choice.items():
             print(f"{number}. {action}")
 
@@ -485,18 +550,20 @@ def task10():
             print("Exiting...")
             break
         elif choice == "1":
-            print(f"Starting game with {player.name}!")
-            battle(player, enemy1)
-            print("Next battle!")
-            battle(player, enemy2)
-            print("Final battle!")
-            battle(player, enemy3)
-            print("Game over!")
+            player_name = input("Enter your character's name: ")
+            player = Player(player_name)
+            adventure(player)
             break
         elif choice == "2":
             player.show_stats()
+        elif choice == "3":
+            loaded_player = load_game()
+            if loaded_player:
+                player = loaded_player
+                adventure(player)
         else:
             print("Invalid choice.")
+        
      
         
         
